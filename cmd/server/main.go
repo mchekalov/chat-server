@@ -1,16 +1,36 @@
 package main
 
 import (
+	"context"
 	"log"
 	"net"
 
-	desc "github.com/mchekalov/chat-api/pkg/chat_api_v1"
+	desc "chat-server/pkg/chat_api_v1"
+
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
+	"google.golang.org/protobuf/types/known/emptypb"
 )
 
 type server struct {
-	desc.U
+	desc.UnimplementedChatapiV1Server
+}
+
+func (s *server) Create(_ context.Context, r *desc.CreateRequest) (*desc.CreateResponse, error) {
+	log.Printf("Create new chat: %v", r.GetUsernames())
+	return &desc.CreateResponse{
+		Id: 4,
+	}, nil
+}
+
+func (s *server) Delete(_ context.Context, r *desc.DeleteRequest) (*emptypb.Empty, error) {
+	log.Printf("Delete chat by Id: %v", r.GetId())
+	return new(emptypb.Empty), nil
+}
+
+func (s *server) SendMessage(_ context.Context, r *desc.SendMessageRequest) (*emptypb.Empty, error) {
+	log.Printf("Send message: %v", r.GetInfo())
+	return new(emptypb.Empty), nil
 }
 
 func main() {
@@ -21,7 +41,7 @@ func main() {
 
 	s := grpc.NewServer()
 	reflection.Register(s)
-	desc.RegisterNoteV1Server(s, &server{})
+	desc.RegisterChatapiV1Server(s, &server{})
 
 	log.Printf("server listening at %v", lis.Addr())
 

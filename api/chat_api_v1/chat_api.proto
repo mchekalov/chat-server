@@ -5,13 +5,11 @@ package chat_api_v1;
 import "google/protobuf/timestamp.proto";
 import "google/protobuf/empty.proto";
 
-option go_package = "github.com/mchekalov/chat-api/pkg/chat_api_v1;chat_api_v1";
+option go_package = "chat-server/pkg/chat_api_v1;chat_api_v1";
 
 service ChatapiV1 {
     rpc Create (CreateRequest) returns (CreateResponse);
-    
     rpc Delete (DeleteRequest) returns (google.protobuf.Empty);
-    
     rpc SendMessage (SendMessageRequest) returns (google.protobuf.Empty);
 }
 
