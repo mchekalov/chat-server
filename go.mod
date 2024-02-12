@@ -1,6 +1,6 @@
 module chat-server
 
-go 1.22.0
+go 1.22
 
 require (
 	google.golang.org/grpc v1.61.0
