@@ -32,23 +32,24 @@ func (s *server) Create(ctx context.Context, r *desc.CreateRequest) (*desc.Creat
 	log.Printf("Create new chat: %v", values)
 
 	row := s.pgx.QueryRow(ctx, "INSERT INTO chats (chat_name) VALUES ($1) RETURNING chat_id", gofakeit.FirstName())
-	var chat_id, us_id int64
-	err := row.Scan(&chat_id)
+	var chatID, usID int64
+	err := row.Scan(&chatID)
 	if err != nil {
 		log.Printf("Failed to create new chat: %v", err)
 	}
 	// need change "for loop" for insert multiple rows with squirrel later
 	for _, v := range values {
 		row := s.pgx.QueryRow(ctx, "INSERT INTO users (user_name, chat_id) VALUES ($1, $2) RETURNING user_id",
-			v, chat_id)
-		err := row.Scan(&us_id)
+			v, chatID)
+		err := row.Scan(&usID)
 		if err != nil {
 			log.Printf("Failed to create users: %v", err)
 		}
+		log.Printf("Create new user: %v", usID)
 	}
 
 	return &desc.CreateResponse{
-		Id: chat_id,
+		Id: chatID,
 	}, nil
 }
 
@@ -69,8 +70,8 @@ func (s *server) SendMessage(ctx context.Context, r *desc.SendMessageRequest) (*
 
 	row := s.pgx.QueryRow(ctx, "INSERT INTO messages (chat_id, user_name, message_text) VALUES ($1, $2, $3) RETURNING message_id",
 		gofakeit.Uint8(), r.Info.From, r.Info.Text)
-	var message_id int64
-	err := row.Scan(&message_id)
+	var messageID int64
+	err := row.Scan(&messageID)
 	if err != nil {
 		log.Printf("Failed to insert new message: %v", err)
 	}
