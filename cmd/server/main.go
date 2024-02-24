@@ -28,55 +28,39 @@ func init() {
 }
 
 func (s *server) Create(ctx context.Context, r *desc.CreateRequest) (*desc.CreateResponse, error) {
-	values := r.GetUsernames()
-	log.Printf("Create new chat: %v", values)
 
-	row := s.pgx.QueryRow(ctx, "INSERT INTO chats (chat_name) VALUES ($1) RETURNING chat_id", gofakeit.FirstName())
+	log.Printf("Create new chat: %v", r.GetUsernames())
+
+	row := s.pgx.QueryRow(ctx, "INSERT INTO chats (chat_name) VALUES ($1) RETURNING chat_id", r.Chatname)
 	var chatID, usID int64
 	err := row.Scan(&chatID)
-	if err != nil {
-		log.Printf("Failed to create new chat: %v", err)
-	}
-	// need change "for loop" for insert multiple rows with squirrel later
-	for _, v := range values {
+
+	for _, v := range r.GetUsernames() {
 		row := s.pgx.QueryRow(ctx, "INSERT INTO users (user_name, chat_id) VALUES ($1, $2) RETURNING user_id",
 			v, chatID)
-		err := row.Scan(&usID)
-		if err != nil {
-			log.Printf("Failed to create users: %v", err)
-		}
-		log.Printf("Create new user: %v", usID)
+		err = row.Scan(&usID)
 	}
 
 	return &desc.CreateResponse{
 		Id: chatID,
-	}, nil
+	}, err
 }
 
 func (s *server) Delete(ctx context.Context, r *desc.DeleteRequest) (*emptypb.Empty, error) {
-	log.Printf("Delete chat by Id: %v", r.Id)
 
 	_, err := s.pgx.Exec(ctx, "DELETE FROM chats WHERE chat_id=$1", r.Id)
-	if err != nil {
-		log.Printf("Failed when deleting chat: %v", err)
-		return nil, err
-	}
 
-	return new(emptypb.Empty), nil
+	return new(emptypb.Empty), err
 }
 
 func (s *server) SendMessage(ctx context.Context, r *desc.SendMessageRequest) (*emptypb.Empty, error) {
-	log.Printf("Send message: %v", r.Info)
 
 	row := s.pgx.QueryRow(ctx, "INSERT INTO messages (chat_id, user_name, message_text) VALUES ($1, $2, $3) RETURNING message_id",
 		gofakeit.Uint8(), r.Info.From, r.Info.Text)
 	var messageID int64
 	err := row.Scan(&messageID)
-	if err != nil {
-		log.Printf("Failed to insert new message: %v", err)
-	}
 
-	return new(emptypb.Empty), nil
+	return new(emptypb.Empty), err
 }
 
 func main() {

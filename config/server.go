@@ -2,6 +2,7 @@ package config
 
 import (
 	"errors"
+	"net"
 	"os"
 )
 
@@ -40,5 +41,5 @@ func NewGRPCConfig() (GRPCConfig, error) {
 
 // Address returns the address (host:port) of the gRPC server.
 func (cfg *grpcConfig) Address() string {
-	return cfg.host + ":" + cfg.port
+	return net.JoinHostPort(cfg.host, cfg.port)
 }

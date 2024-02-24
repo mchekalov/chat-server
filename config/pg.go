@@ -2,6 +2,7 @@ package config
 
 import (
 	"errors"
+	"fmt"
 	"os"
 )
 
@@ -68,6 +69,6 @@ func NewPGConfig() (PGConfig, error) {
 
 // DsnString constructs the connection string for PostgreSQL using configuration parameters.
 func (cfg *pgConfig) DsnString() string {
-	return "host=" + cfg.host + " port=" + cfg.port + " dbname=" + cfg.basename +
-		" user=" + cfg.user + " password=" + cfg.password + " sslmode=" + cfg.sslmode
+	return fmt.Sprintf("host=%v port= %v dbname=%v user=%v password=%v sslmode=%v",
+		cfg.host, cfg.port, cfg.basename, cfg.user, cfg.password, cfg.sslmode)
 }

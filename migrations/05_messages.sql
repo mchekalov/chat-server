@@ -3,8 +3,8 @@
 create table messages (
     message_id      serial primary key,
     chat_id         int,
-    user_name       varchar(35),
-    message_text    varchar(1024),
+    user_name       text not null,
+    message_text    text not null,
     message_created_at timestamp not null default now()
 );
 -- +goose StatementEnd

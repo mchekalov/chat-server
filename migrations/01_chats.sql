@@ -2,7 +2,7 @@
 -- +goose StatementBegin
 create table chats (
     chat_id     serial primary key,
-    chat_name   varchar(25)
+    chat_name   text not null
 );
 -- +goose StatementEnd
 
