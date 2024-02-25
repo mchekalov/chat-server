@@ -1,3 +1,5 @@
+include .env
+
 LOCAL_BIN:=$(CURDIR)/bin
 
 install-golangci-lint:
@@ -18,3 +20,24 @@ generate:
 	--go-grpc_out=pkg/chat_api_v1 --go-grpc_opt=paths=source_relative \
 	--plugin=protoc-gen-go-grpc=bin/protoc-gen-go-grpc \
 	api/chat_api_v1/chat_api.proto
+
+LOCAL_MIGRATION_DIR=$(MIGRATION_DIR)
+LOCAL_MIGRATION_DSN="host=$(PG_HOST) port=$(PG_PORT) dbname=$(PG_DATABASE_NAME) user=$(PG_USER) password=$(PG_PASSWORD) sslmode=$(PG_SSLMODE)"
+
+compose:
+	docker-compose up -d
+
+inst-goose:
+	GOBIN=$(LOCAL_BIN) go install github.com/pressly/goose/v3/cmd/goose@latest
+
+local-migration-status:
+	${LOCAL_BIN}/goose -dir ${MIGRATION_DIR} postgres ${LOCAL_MIGRATION_DSN} status -v
+
+local-migration-up:
+	${LOCAL_BIN}/goose -dir ${MIGRATION_DIR} postgres ${LOCAL_MIGRATION_DSN} up -v
+
+local-migration-down:
+	${LOCAL_BIN}/goose -dir ${MIGRATION_DIR} postgres ${LOCAL_MIGRATION_DSN} down -v
+
+build:
+	go build -o ./bin ./...
