@@ -34,23 +34,32 @@ func (s *server) Create(ctx context.Context, r *desc.CreateRequest) (*desc.Creat
 	row := s.pgx.QueryRow(ctx, "INSERT INTO chats (chat_name) VALUES ($1) RETURNING chat_id", r.Chatname)
 	var chatID, usID int64
 	err := row.Scan(&chatID)
+	if err != nil {
+		return nil, err
+	}
 
 	for _, v := range r.GetUsernames() {
 		row := s.pgx.QueryRow(ctx, "INSERT INTO users (user_name, chat_id) VALUES ($1, $2) RETURNING user_id",
 			v, chatID)
 		err = row.Scan(&usID)
+		if err != nil {
+			return nil, err
+		}
 	}
 
 	return &desc.CreateResponse{
 		Id: chatID,
-	}, err
+	}, nil
 }
 
 func (s *server) Delete(ctx context.Context, r *desc.DeleteRequest) (*emptypb.Empty, error) {
 
 	_, err := s.pgx.Exec(ctx, "DELETE FROM chats WHERE chat_id=$1", r.Id)
+	if err != nil {
+		return nil, err
+	}
 
-	return new(emptypb.Empty), err
+	return new(emptypb.Empty), nil
 }
 
 func (s *server) SendMessage(ctx context.Context, r *desc.SendMessageRequest) (*emptypb.Empty, error) {
@@ -59,8 +68,11 @@ func (s *server) SendMessage(ctx context.Context, r *desc.SendMessageRequest) (*
 		gofakeit.Uint8(), r.Info.From, r.Info.Text)
 	var messageID int64
 	err := row.Scan(&messageID)
+	if err != nil {
+		return nil, err
+	}
 
-	return new(emptypb.Empty), err
+	return new(emptypb.Empty), nil
 }
 
 func main() {
