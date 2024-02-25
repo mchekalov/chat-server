@@ -38,3 +38,6 @@ local-migration-up:
 
 local-migration-down:
 	${LOCAL_BIN}/goose -dir ${MIGRATION_DIR} postgres ${LOCAL_MIGRATION_DSN} down -v
+
+build:
+	go build -o ./bin ./...
