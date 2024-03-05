@@ -1,10 +1,11 @@
 package chat
 
 import (
-	"chat-server/internal/model"
-	repository "chat-server/internal/repository"
-	"chat-server/internal/service"
 	"context"
+
+	"github.com/mchekalov/chat-server/internal/model"
+	repository "github.com/mchekalov/chat-server/internal/repository"
+	"github.com/mchekalov/chat-server/internal/service"
 )
 
 type serv struct {
@@ -17,7 +18,6 @@ func NewService(chatRepository repository.ChatRepository) service.ChatService {
 }
 
 func (s *serv) Create(ctx context.Context, in *model.Chat) (int64, error) {
-
 	output, err := s.chatRepository.Create(ctx, in)
 	if err != nil {
 		return 0, err
@@ -27,7 +27,6 @@ func (s *serv) Create(ctx context.Context, in *model.Chat) (int64, error) {
 }
 
 func (s *serv) Delete(ctx context.Context, in *model.ChatDelete) error {
-
 	err := s.chatRepository.Delete(ctx, in)
 	if err != nil {
 		return err
@@ -38,8 +37,7 @@ func (s *serv) Delete(ctx context.Context, in *model.ChatDelete) error {
 }
 
 func (s *serv) SendMessage(ctx context.Context, in *model.Message) error {
-
-	err := s.chatRepository.SendMessage(ctx, in)
+	err := s.chatRepository.SaveMessage(ctx, in)
 	if err != nil {
 		return err
 	}

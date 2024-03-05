@@ -1,11 +1,13 @@
 package chat
 
 import (
-	"chat-server/internal/client/db"
-	"chat-server/internal/model"
-	"chat-server/internal/repository"
-	"chat-server/internal/repository/chat/converter"
 	"context"
+	"fmt"
+
+	"github.com/mchekalov/chat-server/internal/client/db"
+	"github.com/mchekalov/chat-server/internal/model"
+	"github.com/mchekalov/chat-server/internal/repository"
+	"github.com/mchekalov/chat-server/internal/repository/chat/converter"
 
 	"github.com/Masterminds/squirrel"
 )
@@ -14,6 +16,7 @@ const (
 	tableName      = "chats"
 	chatidColumn   = "chat_id"
 	chatnameColumn = "chat_name"
+	chatIDColumn   = "chat_id"
 )
 
 const (
@@ -35,14 +38,13 @@ func NewRepository(db db.Client) repository.ChatRepository {
 }
 
 func (r *repo) Create(ctx context.Context, chat *model.Chat) (int64, error) {
-
 	// Better place to convert from service model to repo model
 	chatRepo := converter.FromChatToRepo(chat)
 
 	builder := r.sq.Insert(tableName).
 		Columns(chatnameColumn).
 		Values(chatRepo.ChatName).
-		Suffix("RETURNING chat_id")
+		Suffix(fmt.Sprintf("RETURNING %v", chatIDColumn))
 
 	query, args, err := builder.ToSql()
 	if err != nil {
@@ -82,7 +84,7 @@ func (r *repo) Delete(ctx context.Context, id *model.ChatDelete) error {
 	return nil
 }
 
-func (r *repo) SendMessage(ctx context.Context, message *model.Message) error {
+func (r *repo) SaveMessage(ctx context.Context, message *model.Message) error {
 	builder := r.sq.Insert(tableMessages).
 		Columns(chatidColumn, userNameColumn, messageTextColumn).
 		Values(message.ChatID, message.UserName, message.MessageText)

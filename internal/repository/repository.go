@@ -1,8 +1,9 @@
 package repository
 
 import (
-	"chat-server/internal/model"
 	"context"
+
+	"github.com/mchekalov/chat-server/internal/model"
 )
 
 // ChatRepository defines an interface for interacting with the repository layer
@@ -10,5 +11,5 @@ import (
 type ChatRepository interface {
 	Create(ctx context.Context, chat *model.Chat) (int64, error)
 	Delete(ctx context.Context, id *model.ChatDelete) error
-	SendMessage(ctx context.Context, message *model.Message) error
+	SaveMessage(ctx context.Context, message *model.Message) error
 }

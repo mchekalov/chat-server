@@ -1,4 +1,4 @@
-module chat-server
+module github.com/mchekalov/chat-server
 
 go 1.22
 

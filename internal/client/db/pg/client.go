@@ -6,7 +6,7 @@ import (
 	"github.com/jackc/pgx/v5/pgxpool"
 	"github.com/pkg/errors"
 
-	"chat-server/internal/client/db"
+	"github.com/mchekalov/chat-server/internal/client/db"
 )
 
 type pgClient struct {

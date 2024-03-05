@@ -1,11 +1,12 @@
 package pg
 
 import (
-	"chat-server/internal/client/db"
-	"chat-server/internal/client/db/prettier"
 	"context"
 	"fmt"
 	"log"
+
+	"github.com/mchekalov/chat-server/internal/client/db"
+	"github.com/mchekalov/chat-server/internal/client/db/prettier"
 
 	"github.com/georgysavva/scany/v2/pgxscan"
 	"github.com/jackc/pgx/v5"

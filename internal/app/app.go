@@ -9,9 +9,9 @@ import (
 	"google.golang.org/grpc/credentials/insecure"
 	"google.golang.org/grpc/reflection"
 
-	"chat-server/internal/closer"
-	"chat-server/internal/config"
-	desc "chat-server/pkg/chat_api_v1"
+	"github.com/mchekalov/chat-server/internal/closer"
+	"github.com/mchekalov/chat-server/internal/config"
+	desc "github.com/mchekalov/chat-server/pkg/chat_api_v1"
 )
 
 // App represents the chat server application.

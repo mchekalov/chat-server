@@ -1,8 +1,8 @@
 package api
 
 import (
-	"chat-server/internal/service"
-	desc "chat-server/pkg/chat_api_v1"
+	"github.com/mchekalov/chat-server/internal/service"
+	desc "github.com/mchekalov/chat-server/pkg/chat_api_v1"
 )
 
 // Implementation represents the implementation of the chat API server.

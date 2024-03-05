@@ -1,8 +1,9 @@
 package service
 
 import (
-	"chat-server/internal/model"
 	"context"
+
+	"github.com/mchekalov/chat-server/internal/model"
 )
 
 // ChatService defines an interface for interacting with the service layer

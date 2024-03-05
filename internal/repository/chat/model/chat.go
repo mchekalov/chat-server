@@ -4,7 +4,6 @@ import "time"
 
 // Chat represents a chat room with a unique ID and name in repo layer
 type Chat struct {
-	ChatID   int64
 	ChatName string
 }
 

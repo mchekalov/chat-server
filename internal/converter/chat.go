@@ -1,8 +1,8 @@
 package converter
 
 import (
-	"chat-server/internal/model"
-	desc "chat-server/pkg/chat_api_v1"
+	"github.com/mchekalov/chat-server/internal/model"
+	desc "github.com/mchekalov/chat-server/pkg/chat_api_v1"
 
 	"github.com/brianvoe/gofakeit/v6"
 )
@@ -27,7 +27,6 @@ type SendMessageInput struct {
 // ToCreateChatInput converts a CreateRequest object from the API to a model.Chat entity.
 func ToCreateChatInput(req *desc.CreateRequest) *model.Chat {
 	return &model.Chat{
-		ChatID:   gofakeit.Int64(),
 		ChatName: req.Chatname,
 	}
 }

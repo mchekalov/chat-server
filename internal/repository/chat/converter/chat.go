@@ -1,14 +1,13 @@
 package converter
 
 import (
-	"chat-server/internal/model"
-	modelRepo "chat-server/internal/repository/chat/model"
+	"github.com/mchekalov/chat-server/internal/model"
+	modelRepo "github.com/mchekalov/chat-server/internal/repository/chat/model"
 )
 
 // FromRepoToChat converts a repository Chat model to a chat system Chat entity.
 func FromRepoToChat(chat *modelRepo.Chat) *model.Chat {
 	return &model.Chat{
-		ChatID:   chat.ChatID,
 		ChatName: chat.ChatName,
 	}
 }
@@ -16,7 +15,6 @@ func FromRepoToChat(chat *modelRepo.Chat) *model.Chat {
 // FromChatToRepo converts a chat system Chat entity to a repository Chat model.
 func FromChatToRepo(chat *model.Chat) *modelRepo.Chat {
 	return &modelRepo.Chat{
-		ChatID:   chat.ChatID,
 		ChatName: chat.ChatName,
 	}
 }

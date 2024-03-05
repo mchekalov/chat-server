@@ -2,7 +2,6 @@ package model
 
 // Chat represents a chat room with a unique ID and name.
 type Chat struct {
-	ChatID   int64  // Unique identifier for the chat room.
 	ChatName string // Name of the chat room.
 }
 

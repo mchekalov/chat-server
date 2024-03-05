@@ -1,17 +1,18 @@
 package app
 
 import (
-	"chat-server/internal/api"
-	"chat-server/internal/client/db"
-	"chat-server/internal/client/db/pg"
-	"chat-server/internal/closer"
-	"chat-server/internal/config"
-	"chat-server/internal/repository"
-	chatrepository "chat-server/internal/repository/chat"
-	"chat-server/internal/service"
-	chatservice "chat-server/internal/service/chat"
 	"context"
 	"log"
+
+	"github.com/mchekalov/chat-server/internal/api"
+	"github.com/mchekalov/chat-server/internal/client/db"
+	"github.com/mchekalov/chat-server/internal/client/db/pg"
+	"github.com/mchekalov/chat-server/internal/closer"
+	"github.com/mchekalov/chat-server/internal/config"
+	"github.com/mchekalov/chat-server/internal/repository"
+	chatrepository "github.com/mchekalov/chat-server/internal/repository/chat"
+	"github.com/mchekalov/chat-server/internal/service"
+	chatservice "github.com/mchekalov/chat-server/internal/service/chat"
 )
 
 type serviceProvider struct {
