@@ -14,7 +14,6 @@ import (
 
 const (
 	tableName      = "chats"
-	chatidColumn   = "chat_id"
 	chatnameColumn = "chat_name"
 	chatIDColumn   = "chat_id"
 )
@@ -67,7 +66,7 @@ func (r *repo) Create(ctx context.Context, chat *model.Chat) (int64, error) {
 
 func (r *repo) Delete(ctx context.Context, id *model.ChatDelete) error {
 	builder := r.sq.Delete(tableName).
-		Where(squirrel.Eq{chatidColumn: id})
+		Where(squirrel.Eq{chatIDColumn: id})
 
 	query, args, err := builder.ToSql()
 	if err != nil {
@@ -86,7 +85,7 @@ func (r *repo) Delete(ctx context.Context, id *model.ChatDelete) error {
 
 func (r *repo) SaveMessage(ctx context.Context, message *model.Message) error {
 	builder := r.sq.Insert(tableMessages).
-		Columns(chatidColumn, userNameColumn, messageTextColumn).
+		Columns(chatIDColumn, userNameColumn, messageTextColumn).
 		Values(message.ChatID, message.UserName, message.MessageText)
 
 	query, args, err := builder.ToSql()
