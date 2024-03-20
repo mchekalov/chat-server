@@ -26,11 +26,11 @@ type pg struct {
 }
 
 // NewDB creates a new PostgreSQL database client.
-func NewDB(dbc *pgxpool.Pool) db.DB {
-	return &pg{
-		dbc: dbc,
-	}
-}
+//func NewDB(dbc *pgxpool.Pool) db.DB {
+//	return &pg{
+//		dbc: dbc,
+//	}
+//}
 
 func (p *pg) ScanOneContext(ctx context.Context, dest interface{}, q db.Query, args ...interface{}) error {
 	logQuery(ctx, q, args...)
