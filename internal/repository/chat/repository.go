@@ -4,17 +4,17 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/mchekalov/chat-server/internal/client/db"
 	"github.com/mchekalov/chat-server/internal/model"
 	"github.com/mchekalov/chat-server/internal/repository"
 	"github.com/mchekalov/chat-server/internal/repository/chat/converter"
+	"github.com/mchekalov/platform_common/pkg/db"
 
 	"github.com/Masterminds/squirrel"
 )
 
 const (
 	tableName      = "chats"
-	chatnameColumn = "chat_name"
+	chatNameColumn = "chat_name"
 	chatIDColumn   = "chat_id"
 )
 
@@ -41,7 +41,7 @@ func (r *repo) Create(ctx context.Context, chat *model.Chat) (int64, error) {
 	chatRepo := converter.FromChatToRepo(chat)
 
 	builder := r.sq.Insert(tableName).
-		Columns(chatnameColumn).
+		Columns(chatNameColumn).
 		Values(chatRepo.ChatName).
 		Suffix(fmt.Sprintf("RETURNING %v", chatIDColumn))
 
@@ -66,7 +66,7 @@ func (r *repo) Create(ctx context.Context, chat *model.Chat) (int64, error) {
 
 func (r *repo) Delete(ctx context.Context, id *model.ChatDelete) error {
 	builder := r.sq.Delete(tableName).
-		Where(squirrel.Eq{chatIDColumn: id})
+		Where(squirrel.Eq{chatIDColumn: id.ChatID})
 
 	query, args, err := builder.ToSql()
 	if err != nil {
@@ -98,7 +98,7 @@ func (r *repo) SaveMessage(ctx context.Context, message *model.Message) error {
 		QueryRaw: query,
 	}
 
-	r.db.DB().QueryRowContext(ctx, q, args)
+	r.db.DB().QueryRowContext(ctx, q, args...)
 
 	return nil
 }
