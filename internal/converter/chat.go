@@ -3,8 +3,6 @@ package converter
 import (
 	"github.com/mchekalov/chat-server/internal/model"
 	desc "github.com/mchekalov/chat-server/pkg/chat_api_v1"
-
-	"github.com/brianvoe/gofakeit/v6"
 )
 
 // CreateChatInput represents the input structure for creating a chat room.
@@ -48,7 +46,7 @@ func ToDeleteChatInput(req *desc.DeleteRequest) *model.ChatDelete {
 // ToSendMessageInput converts a SendMessageRequest object from the API to a model.Message entity.
 func ToSendMessageInput(req *desc.SendMessageRequest) *model.Message {
 	return &model.Message{
-		ChatID:      gofakeit.Int64(),
+		ChatID:      0,
 		UserName:    req.Info.From,
 		MessageText: req.Info.Text,
 	}

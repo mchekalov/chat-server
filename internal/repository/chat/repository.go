@@ -4,10 +4,10 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/mchekalov/chat-server/internal/client/db"
 	"github.com/mchekalov/chat-server/internal/model"
 	"github.com/mchekalov/chat-server/internal/repository"
 	"github.com/mchekalov/chat-server/internal/repository/chat/converter"
+	"github.com/mchekalov/platform_common/pkg/db"
 
 	"github.com/Masterminds/squirrel"
 )
