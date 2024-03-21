@@ -30,12 +30,12 @@ func TestSaveMessage(t *testing.T) {
 		mc    = minimock.NewController(t)
 		title = gofakeit.Animal()
 		text  = gofakeit.Animal()
-		id    = gofakeit.Int64()
+		id    = 0
 
 		serviceErr = fmt.Errorf("repo error")
 
 		req = &model.Message{
-			ChatID:      id,
+			ChatID:      int64(id),
 			UserName:    title,
 			MessageText: text,
 		}

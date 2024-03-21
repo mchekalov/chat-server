@@ -2,8 +2,6 @@ package chat
 
 import (
 	"context"
-	"github.com/brianvoe/gofakeit/v6"
-
 	"github.com/mchekalov/chat-server/internal/model"
 	repository "github.com/mchekalov/chat-server/internal/repository"
 	"github.com/mchekalov/chat-server/internal/service"
@@ -40,7 +38,7 @@ func (s *serv) Delete(ctx context.Context, in *model.ChatDelete) error {
 func (s *serv) SendMessage(ctx context.Context, in *model.Message) error {
 	// get id from anything and send to repo layer
 	err := s.chatRepository.SaveMessage(ctx, &model.Message{
-		ChatID:      int64(gofakeit.Uint32()),
+		ChatID:      0,
 		UserName:    in.UserName,
 		MessageText: in.MessageText,
 	})
