@@ -27,6 +27,7 @@
   "paths": {
     "/chat-server/v1": {
       "delete": {
+        "summary": "Delete chat",
         "operationId": "ChatapiV1_Delete",
         "responses": {
           "200": {
@@ -55,10 +56,9 @@
         "tags": [
           "ChatapiV1"
         ]
-      }
-    },
-    "/chat-server/v1/create": {
+      },
       "post": {
+        "summary": "Create new chat",
         "operationId": "ChatapiV1_Create",
         "responses": {
           "200": {
@@ -89,8 +89,9 @@
         ]
       }
     },
-    "/chat-server/v1/sendMessage": {
+    "/chat-server/v1/send-message": {
       "post": {
+        "summary": "Send new message",
         "operationId": "ChatapiV1_SendMessage",
         "responses": {
           "200": {
@@ -134,7 +135,8 @@
           }
         },
         "chatname": {
-          "type": "string"
+          "type": "string",
+          "title": "Chat name"
         }
       }
     },

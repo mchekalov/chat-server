@@ -28,20 +28,23 @@ option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
 };
 
 service ChatapiV1 {
+    // Create new chat
     rpc Create (CreateRequest) returns (CreateResponse){
         option (google.api.http) = {
-            post: "/chat-server/v1/create"
+            post: "/chat-server/v1"
             body: "*"
         };
     }
+    // Delete chat
     rpc Delete (DeleteRequest) returns (google.protobuf.Empty){
         option (google.api.http) = {
             delete: "/chat-server/v1"
         };
     }
+    // Send new message
     rpc SendMessage (SendMessageRequest) returns (google.protobuf.Empty){
         option (google.api.http) = {
-            post: "/chat-server/v1/sendMessage"
+            post: "/chat-server/v1/send-message"
             body: "*"
         };
     }
@@ -49,6 +52,7 @@ service ChatapiV1 {
 
 message CreateRequest {
     repeated string usernames = 1;
+    // Chat name
     string chatname = 2 [
         (validate.rules).string = {min_len: 1, max_len: 50}
     ];

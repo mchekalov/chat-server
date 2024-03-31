@@ -149,7 +149,7 @@ func RegisterChatapiV1HandlerServer(ctx context.Context, mux *runtime.ServeMux, 
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/chat_api_v1.ChatapiV1/Create", runtime.WithHTTPPathPattern("/chat-server/v1/create"))
+		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/chat_api_v1.ChatapiV1/Create", runtime.WithHTTPPathPattern("/chat-server/v1"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -199,7 +199,7 @@ func RegisterChatapiV1HandlerServer(ctx context.Context, mux *runtime.ServeMux, 
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/chat_api_v1.ChatapiV1/SendMessage", runtime.WithHTTPPathPattern("/chat-server/v1/sendMessage"))
+		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/chat_api_v1.ChatapiV1/SendMessage", runtime.WithHTTPPathPattern("/chat-server/v1/send-message"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -263,7 +263,7 @@ func RegisterChatapiV1HandlerClient(ctx context.Context, mux *runtime.ServeMux, 
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/chat_api_v1.ChatapiV1/Create", runtime.WithHTTPPathPattern("/chat-server/v1/create"))
+		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/chat_api_v1.ChatapiV1/Create", runtime.WithHTTPPathPattern("/chat-server/v1"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -307,7 +307,7 @@ func RegisterChatapiV1HandlerClient(ctx context.Context, mux *runtime.ServeMux, 
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/chat_api_v1.ChatapiV1/SendMessage", runtime.WithHTTPPathPattern("/chat-server/v1/sendMessage"))
+		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/chat_api_v1.ChatapiV1/SendMessage", runtime.WithHTTPPathPattern("/chat-server/v1/send-message"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -327,11 +327,11 @@ func RegisterChatapiV1HandlerClient(ctx context.Context, mux *runtime.ServeMux, 
 }
 
 var (
-	pattern_ChatapiV1_Create_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"chat-server", "v1", "create"}, ""))
+	pattern_ChatapiV1_Create_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"chat-server", "v1"}, ""))
 
 	pattern_ChatapiV1_Delete_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"chat-server", "v1"}, ""))
 
-	pattern_ChatapiV1_SendMessage_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"chat-server", "v1", "sendMessage"}, ""))
+	pattern_ChatapiV1_SendMessage_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"chat-server", "v1", "send-message"}, ""))
 )
 
 var (
