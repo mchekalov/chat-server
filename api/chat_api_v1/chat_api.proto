@@ -4,18 +4,58 @@ package chat_api_v1;
 
 import "google/protobuf/timestamp.proto";
 import "google/protobuf/empty.proto";
+import "validate/validate.proto";
+import "google/api/annotations.proto";
+import "protoc-gen-openapiv2/options/annotations.proto";
 
 option go_package = "chat-server/pkg/chat_api_v1;chat_api_v1";
 
+option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
+    info: {
+        title: "Chat-Server API"
+        version: "1.0.0"
+        contact: {
+            name: "mchekalov"
+            email: "mchekalov@gmail.com"
+        };
+    };
+
+    host: "localhost:8080",
+    schemes: HTTP,
+    schemes: HTTPS,
+    consumes: "application/json",
+    produces: "application/json",
+};
+
 service ChatapiV1 {
-    rpc Create (CreateRequest) returns (CreateResponse);
-    rpc Delete (DeleteRequest) returns (google.protobuf.Empty);
-    rpc SendMessage (SendMessageRequest) returns (google.protobuf.Empty);
+    // Create new chat
+    rpc Create (CreateRequest) returns (CreateResponse){
+        option (google.api.http) = {
+            post: "/chat-server/v1"
+            body: "*"
+        };
+    }
+    // Delete chat
+    rpc Delete (DeleteRequest) returns (google.protobuf.Empty){
+        option (google.api.http) = {
+            delete: "/chat-server/v1"
+        };
+    }
+    // Send new message
+    rpc SendMessage (SendMessageRequest) returns (google.protobuf.Empty){
+        option (google.api.http) = {
+            post: "/chat-server/v1/send-message"
+            body: "*"
+        };
+    }
 }
 
 message CreateRequest {
     repeated string usernames = 1;
-    string chatname = 2;
+    // Chat name
+    string chatname = 2 [
+        (validate.rules).string = {min_len: 1, max_len: 50}
+    ];
 }
 
 message CreateResponse {
